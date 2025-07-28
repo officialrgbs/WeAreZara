@@ -35,8 +35,10 @@ function SDList() {
       <h2 className="text-xl font-semibold mb-2">School Days</h2>
       <ul className="list-disc ml-6 space-y-2">
         {schoolDays.map((item) => (
-          <li key={item.id} className="cursor-pointer hover:underline" onClick={() => handleItemClick(item.recap)}>
-            <strong>{item.date}</strong>
+          <li key={item.id} className={`cursor-pointer hover:underline ${item.suspended ? 'text-red-600' : ''}`} onClick={() => handleItemClick(item.recap)}>
+            <strong>
+              {item.date} {item.suspended && <span>(suspended)</span>}
+            </strong>
           </li>
         ))}
       </ul>
