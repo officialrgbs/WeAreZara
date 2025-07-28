@@ -9,6 +9,7 @@ import Auth from "./pages/Auth"
 import Navbar from "./components/Navbar"
 import Denied from "./pages/Denied"
 import SchoolDays from "./pages/SchoolDays"
+import Resources from "./pages/Resources"
 
 import MainLayout from "./layouts/MainLayout"
 
@@ -63,6 +64,7 @@ function App() {
         {/* Modifiable Routes */}
         <Route element={<MainLayout user={user} onLogout={handleLogout} />}>
           <Route path="/about" element={<About />} />
+          <Route path="/resources" element={<Resources />} />
         </Route>
 
         {/* Protected Routes inside MainLayout */}
