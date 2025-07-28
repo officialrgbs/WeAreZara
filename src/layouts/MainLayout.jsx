@@ -25,7 +25,7 @@ function MainLayout({user, onLogout}) {
       <Welcomer user={user} onLogout={onLogout} toggleMenu={toggleMenu} />
       <Navbar user={user} onLogout={onLogout} toggleMenu={toggleMenu} />
       <div className="mt-4">
-        <Outlet />
+        <Outlet context={{user, onLogout}}/>
       </div>
     </div>
   )

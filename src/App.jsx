@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { auth } from "./firebase"
+import { useNavigate } from "react-router-dom"
 
 import Home from "./pages/Home"
 import About from "./pages/About"
@@ -10,6 +11,7 @@ import Navbar from "./components/Navbar"
 import Denied from "./pages/Denied"
 import SchoolDays from "./pages/SchoolDays"
 import Resources from "./pages/Resources"
+import Profile from "./pages/Profile"
 
 import MainLayout from "./layouts/MainLayout"
 
@@ -19,6 +21,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [accessDenied, setAccessDenied] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -41,9 +45,14 @@ function App() {
   }, []);
 
   const handleLogout = async () => {
-    await signOut(auth);
-    setUser(null);
-    setAccessDenied(false);
+    try {
+      await signOut(auth);
+      setUser(null);
+      setAccessDenied(false);
+      navigate("/auth");
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
   }
 
   if (loading) return <p>Loading...</p>
@@ -72,6 +81,7 @@ function App() {
           <Route element={<MainLayout user={user} onLogout={handleLogout} />}>
             <Route path="/" element={<Home />} />
             <Route path="/school-days" element={<SchoolDays />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
         )}
 
